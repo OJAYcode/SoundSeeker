@@ -18,6 +18,8 @@ The API only keeps uploads in memory. It needs no ffmpeg because ACRCloud docume
 
 ## Web app
 
-Deploy `apps/web/dist` to Vercel, Netlify, or Cloudflare Pages after `pnpm --filter @soundseeker/web build`. Configure the web host to forward `/api/*` to the API host, or set a deployment-specific API base URL before building.
+Deploy `apps/web/dist` to Vercel, Netlify, or Cloudflare Pages after `pnpm --filter @soundseeker/web build`.
+
+Set `VITE_API_URL` in the web host's build environment to the public API origin, for example `https://soundseeker-api.up.railway.app`. Do not include a trailing slash or `/api` in this value. Rebuild the web app after changing it. Leave it unset locally to use Vite's `/api` proxy.
 
 Microphone access and PWA installation require HTTPS outside `localhost`.

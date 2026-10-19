@@ -5,6 +5,7 @@ import './styles.css';
 
 type Screen = 'home' | 'listening' | 'identifying' | 'result' | 'message' | 'privacy';
 const HISTORY_KEY = 'soundseeker-history';
+const API_BASE_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '') ?? '';
 const mimeTypes = ['audio/webm;codecs=opus', 'audio/mp4', 'audio/webm', 'audio/ogg;codecs=opus'];
 const history = () => {
   try {
@@ -47,7 +48,7 @@ function App() {
     try {
       const form = new FormData();
       form.set('audio', audio, 'recording');
-      const response = await fetch('/api/identify', { method: 'POST', body: form });
+      const response = await fetch(`${API_BASE_URL}/api/identify`, { method: 'POST', body: form });
       const data = (await response.json()) as IdentifyResponse;
       if (!response.ok || data.status === 'error')
         return message(
