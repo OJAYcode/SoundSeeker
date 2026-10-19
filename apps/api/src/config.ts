@@ -7,7 +7,10 @@ const environmentSchema = z.object({
   PER_IP_DAILY_LIMIT: z.coerce.number().int().positive().default(20),
   GLOBAL_DAILY_LIMIT: z.coerce.number().int().positive().default(200),
   ALLOWED_ORIGIN: z.url(),
-  PORT: z.coerce.number().int().positive().max(65535).default(3000),
+  PORT: z.preprocess(
+    (value) => (value === '' || value === '0' || value === 0 ? undefined : value),
+    z.coerce.number().int().positive().max(65535).default(3000),
+  ),
 });
 
 export type AppConfig = z.infer<typeof environmentSchema>;
